@@ -12,25 +12,34 @@ describe 'Items API' do
 
     expect(response).to be_successful
 
-    expect(items.count).to eq(3)
+    expect(items[:data].count).to eq(3)
 
-    items.each do |item|
+    items[:data].each do |item|
       expect(item).to have_key(:id)
-      expect(item[:id]).to be_a(Integer)
+      expect(item[:id]).to be_a(String)
 
-      expect(item).to have_key(:description)
-      expect(item[:description]).to be_a(String)
+      expect(item).to have_key(:type)
+      expect(item[:type]).to be_a(String)
+      expect(item[:type]).to eq('item')
 
-      expect(item).to have_key(:unit_price)
-      expect(item[:unit_price]).to be_a(Float)
+      expect(item).to have_key(:attributes)
+      expect(item[:attributes]).to be_a(Hash)
 
-      expect(item).to have_key(:merchant_id)
-      expect(item[:merchant_id]).to be_a(Integer)
+      expect(item[:attributes]).to have_key(:name)
+      expect(item[:attributes][:name]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:description)
+      expect(item[:attributes][:description]).to be_a(String)
+
+      expect(item[:attributes]).to have_key(:unit_price)
+      expect(item[:attributes][:unit_price]).to be_a(Float)
+
+      expect(item[:attributes]).to have_key(:merchant_id)
+      expect(item[:attributes][:merchant_id]).to be_a(Integer)
     end
   end
 
   it 'returns one item by id' do
-
     merchant = create(:merchant)
     item = create(:item, merchant_id: merchant.id).id
 
@@ -39,17 +48,26 @@ describe 'Items API' do
     item = JSON.parse(response.body, symbolize_names: true)
 
     expect(response).to be_successful
-    
-    expect(item).to have_key(:id)
-    expect(item[:id]).to be_a(Integer)
 
-    expect(item).to have_key(:description)
-    expect(item[:description]).to be_a(String)
+    expect(item[:data]).to have_key(:id)
+    expect(item[:data][:id]).to be_a(String)
 
-    expect(item).to have_key(:unit_price)
-    expect(item[:unit_price]).to be_a(Float)
+    expect(item[:data]).to have_key(:type)
+    expect(item[:data][:type]).to eq('item')
 
-    expect(item).to have_key(:merchant_id)
-    expect(item[:merchant_id]).to be_a(Integer)
+    expect(item[:data]).to have_key(:attributes)
+    expect(item[:data][:attributes]).to be_a(Hash)
+
+    expect(item[:data][:attributes]).to have_key(:name)
+    expect(item[:data][:attributes][:name]).to be_a(String)
+
+    expect(item[:data][:attributes]).to have_key(:description)
+    expect(item[:data][:attributes][:description]).to be_a(String)
+
+    expect(item[:data][:attributes]).to have_key(:unit_price)
+    expect(item[:data][:attributes][:unit_price]).to be_a(Float)
+
+    expect(item[:data][:attributes]).to have_key(:merchant_id)
+    expect(item[:data][:attributes][:merchant_id]).to be_a(Integer)
   end
 end
