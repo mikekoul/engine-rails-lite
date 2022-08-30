@@ -31,6 +31,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 group :test do
   gem 'rspec-rails'
   gem 'simplecov'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :development, :test do
