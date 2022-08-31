@@ -93,6 +93,22 @@ describe 'Items API' do
     expect(created_item.merchant_id).to be_a(Integer)
   end
 
+  it '#update' do
+    merchant = create(:merchant)
+    id = create(:item, merchant_id: merchant.id).id
+    previous_item = Item.last.name
+    item_params = { name: "Gibson" }
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    patch "/api/v1/items/#{id}", headers: headers, params: JSON.generate({item: item_params})
+
+    item = Item.find_by(id: id)
+
+    expect(response).to be_successful
+    expect(item.name).to_not eq(previous_item)
+    expect(item.name).to eq("Gibson")
+  end
+
   it '#destroy' do
     merchant = create(:merchant)
     item = create(:item, merchant_id: merchant.id)
