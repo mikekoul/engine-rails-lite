@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Items API' do
-  it 'sends a list of items' do
+  it '#index' do
 
     merchant = create(:merchant)
     create_list(:item, 3, merchant_id: merchant.id)
@@ -39,7 +39,7 @@ describe 'Items API' do
     end
   end
 
-  it 'returns one item by id' do
+  it '#show' do
     merchant = create(:merchant)
     item = create(:item, merchant_id: merchant.id).id
 
@@ -71,7 +71,7 @@ describe 'Items API' do
     expect(item[:data][:attributes][:merchant_id]).to be_a(Integer)
   end
 
-  it 'create a new item' do
+  it '#create' do
     id = create(:merchant).id
     item_params = ({
                     name: 'Guitar',
@@ -91,5 +91,18 @@ describe 'Items API' do
     expect(created_item.description).to eq('Fender brand electric guitar.')
     expect(created_item.unit_price).to eq(400.99)
     expect(created_item.merchant_id).to be_a(Integer)
+  end
+
+  it '#destroy' do
+    merchant = create(:merchant)
+    item = create(:item, merchant_id: merchant.id)
+
+    expect(Item.count).to eq(1)
+
+    delete "/api/v1/items/#{item.id}"
+
+    expect(response).to be_successful
+    expect(Item.count).to eq(0)
+    expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 end
