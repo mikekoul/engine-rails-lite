@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Items API' do
-  it 'sends a list of items' do
+  it '#index' do
 
     merchant = create(:merchant)
     create_list(:item, 3, merchant_id: merchant.id)
@@ -39,7 +39,7 @@ describe 'Items API' do
     end
   end
 
-  it 'returns one item by id' do
+  it '#show' do
     merchant = create(:merchant)
     item = create(:item, merchant_id: merchant.id).id
 
@@ -69,5 +69,56 @@ describe 'Items API' do
 
     expect(item[:data][:attributes]).to have_key(:merchant_id)
     expect(item[:data][:attributes][:merchant_id]).to be_a(Integer)
+  end
+
+  it '#create' do
+    id = create(:merchant).id
+    item_params = ({
+                    name: 'Guitar',
+                    description: 'Fender brand electric guitar.',
+                    unit_price: 400.99,
+                    merchant_id: id
+    })
+
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post "/api/v1/items", headers: headers, params: JSON.generate(item: item_params)
+
+    created_item = Item.last
+
+    expect(response).to be_successful
+    expect(created_item.name).to eq('Guitar')
+    expect(created_item.description).to eq('Fender brand electric guitar.')
+    expect(created_item.unit_price).to eq(400.99)
+    expect(created_item.merchant_id).to be_a(Integer)
+  end
+
+  it '#update' do
+    merchant = create(:merchant)
+    id = create(:item, merchant_id: merchant.id).id
+    previous_item = Item.last.name
+    item_params = { name: "Gibson" }
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    patch "/api/v1/items/#{id}", headers: headers, params: JSON.generate({item: item_params})
+
+    item = Item.find_by(id: id)
+
+    expect(response).to be_successful
+    expect(item.name).to_not eq(previous_item)
+    expect(item.name).to eq("Gibson")
+  end
+
+  it '#destroy' do
+    merchant = create(:merchant)
+    item = create(:item, merchant_id: merchant.id)
+
+    expect(Item.count).to eq(1)
+
+    delete "/api/v1/items/#{item.id}"
+
+    expect(response).to be_successful
+    expect(Item.count).to eq(0)
+    expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
 end
