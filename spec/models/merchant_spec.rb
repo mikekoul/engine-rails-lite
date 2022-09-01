@@ -6,11 +6,11 @@ RSpec.describe Merchant, type: :model do
   end
 
   describe '#relationships' do
-    it { should have_many :items}
+    it { should have_many :items }
   end
 
   describe '#class methods' do
-    it 'returns a merchant when a name is searched for' do
+    it 'returns a merchant with a case-insensitive and fragmented name search' do
       merchant_1 = Merchant.create!(name: 'Little Shop of Horrors')
       merchant_2 = Merchant.create!(name: 'Strange Imports')
       merchant_3 = Merchant.create!(name: 'Jewelery Rangers')
