@@ -47,4 +47,13 @@ describe "Merchants API" do
     expect(merchant[:data][:attributes]).to have_key(:name)
     expect(merchant[:data][:attributes][:name]).to be_a(String)
   end
+
+  it 'reponds with a 404 code when bad id is given' do
+    create(:merchant).id
+
+    get "/api/v1/merchants/505050"
+
+    expect(response).to_not be_successful
+    expect(response.status).to eq(404)
+  end
 end
