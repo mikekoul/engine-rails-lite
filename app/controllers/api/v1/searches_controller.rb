@@ -10,6 +10,15 @@ class Api::V1::SearchesController < ApplicationController
     end
   end
 
+  def find_items
+    items = Item.search_items(params[:name])
+    if items.nil?
+      render json: { data: { message: 'Item not found' } }
+    else
+      render json: ItemSerializer.new(items)
+    end
+  end
+
   private
   def param_validation
     if !params[:name].present?
