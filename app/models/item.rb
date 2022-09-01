@@ -8,7 +8,7 @@ class Item < ApplicationRecord
   has_many :invoice_items
   has_many :invoices, through: :invoice_items
 
-  def self.search_items(data)
-    where("name ILIKE ?", "%#{data}%").order(name: :desc)
+  def self.search_items(name)
+    where("name ILIKE ?", "%#{name}%").order(name: :desc)
   end
 end
