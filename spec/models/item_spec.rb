@@ -15,14 +15,14 @@ RSpec.describe Item, type: :model do
   end
 
   describe '#class methods' do
-    it 'returns a merchant with a case-insensitive and fragmented name search' do
+    it 'returns all items that match a case-insensitive and fragmented name search' do
       merchant_1 = Merchant.create!(name: 'Little Shop of Horrors')
-      merchant_2 = Merchant.create!(name: 'Strange Imports')
-      merchant_3 = Merchant.create!(name: 'Jewelery Rangers')
+      item_1 = Item.create!(name: 'Plant food', description: 'Food for plants', unit_price: 10.00, merchant_id: merchant_1.id)
+      item_2 = Item.create!(name: 'Plant Pot', description: 'Pot for plants', unit_price: 20.00, merchant_id: merchant_1.id)
+      item_3 = Item.create!(name: 'Venus Fly Trap', description: 'Venus Fly Trap plant', unit_price: 30.00, merchant_id: merchant_1.id)
 
-      expect(Merchant.search_merchant("LiTTle")).to eq(merchant_1)
-      expect(Merchant.search_merchant("rang")).to eq(merchant_3)
-      expect(Merchant.search_merchant("imp")).to eq(merchant_2)
+      expect(Item.search_items("lanT")).to eq([item_1, item_2])
+      expect(Item.search_items("ven")).to eq([item_3])
     end
   end
 end

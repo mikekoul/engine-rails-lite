@@ -4,6 +4,6 @@ class Merchant < ApplicationRecord
   has_many :items
 
   def self.search_merchant(name)
-    where("name ILIKE ?", "%#{name}%").order(name: :asc).first
+    where("name ILIKE ?", "%#{name}%").order(:name).first
   end
 end
