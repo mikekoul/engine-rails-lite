@@ -24,4 +24,16 @@ describe 'Merchant find API' do
     expect(merchant[:data][:attributes]).to have_key(:name)
     expect(merchant[:data][:attributes][:name]).to eq('Jewelery Rangers')
   end
+
+  it 'returns error message when no merchant is found' do
+    merchant_1 = Merchant.create!(name: 'Little Shop of Horrors')
+
+    get '/api/v1/merchants/find?name=ing'
+
+    merchant = JSON.parse(response.body, symbolize_names: true)
+
+    expect(response).to be_successful
+
+    expect(merchant[:data][:message]).to eq('Merchant not found')
+  end
 end
