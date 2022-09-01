@@ -13,7 +13,7 @@ class Api::V1::SearchesController < ApplicationController
   def find_items
     items = Item.search_items(params[:name])
     if items.nil?
-      render json: { data: { message: 'Item not found' } }
+      render json: { data: [] }
     else
       render json: ItemSerializer.new(items)
     end
