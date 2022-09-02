@@ -50,7 +50,7 @@ Mod 3
 ## Wins
 - Successfully built and tested an API from scratch 
 - Gain confidence in testing happy and sad paths 
-- Spliting responsiblities in RESTful convention
+- Splitting responsiblities in RESTful convention
 - Properly using namespacing and resouces when building routes
 - Successfully using serializers for the first time
 
