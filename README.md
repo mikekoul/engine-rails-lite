@@ -8,20 +8,23 @@ Mod 3
   - [Schema](#schema)
   - [Install + Setup](#set-up)
   - [Contributors](#contributors)
-	- [Wins](#wins)
-	- [Improvements](#Improvements)
+  - [Wins](#wins)
+  - [Improvements](#Improvements)
   - [Project Completion](#project-completion)
 
 ## Abstract
-	- The goals of Rails Engine Lite were to gain a functional understanding of the concept of exposing API endpoints. Using serializers to format JSON responses. Test API exposure in Postman and use SQL and ActiveRecord to gather data.
+- The goals of Rails Engine Lite were to gain a functional understanding of the concept of exposing API endpoints 
+- Using serializers to format JSON responses
+- Test API exposure in Postman 
+- Use SQL and ActiveRecord to gather data.
 
 ## Technologies
-  - Ruby on Rails
-  - RSPEC
-  - Postman 
-  - Factory_bot_rails Gem
-	- Faker Gem 
-	- jsonapi-serializer Gem
+- Ruby on Rails
+- RSPEC
+- Postman 
+- Factory_bot_rails Gem
+- Faker Gem 
+- jsonapi-serializer Gem
 
 ## Schema
 
@@ -29,7 +32,7 @@ Mod 3
 
 
 ## Install + Setup
-	- To run Rails Engine Lite:
+- To run Rails Engine Lite:
   - $rails s in terminal to set up server
   - Use Postman to expose API endpoints:
     - http://localhost:3000/api/v1/merchants
@@ -42,18 +45,18 @@ Mod 3
     - http://localhost:3000/api/v1/items/find_all?name=hArU
 
 ## Contributors
-  - [Michael Koulouvaris](https://github.com/mikekoul)
+- [Michael Koulouvaris](https://github.com/mikekoul)
 
 ## Wins
-	- Successfully building and testing an API from scratch 
-  - Gain confidence in testing happy and sad paths 
-  - Spliting responsiblities in RESTful convention
-  - Properly using namespacing and resouces when building routes
-  - Successfully using serializers for the first time
+- Successfully built and tested an API from scratch 
+- Gain confidence in testing happy and sad paths 
+- Spliting responsiblities in RESTful convention
+- Properly using namespacing and resouces when building routes
+- Successfully using serializers for the first time
 
 ## Improvements
- - Currently no known bugs
- - Continue to build out the remaining endpoints
+- Currently no known bugs
+- Continue to build out the remaining endpoints
 
 ## Project Completion 
   - Part 1
@@ -63,8 +66,8 @@ Mod 3
   - Part 2
     - Set One
       - Happy Path, Sad Path - Completed. All happy and sad paths tested
-      - Extenstions - Completed. All edgecase tested  
-
+      - Extenstions - Completed. All edge cases tested  
+ 
 
 
 
