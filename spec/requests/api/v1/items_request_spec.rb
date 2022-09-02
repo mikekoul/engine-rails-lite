@@ -121,4 +121,39 @@ describe 'Items API' do
     expect(Item.count).to eq(0)
     expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  describe '#sad_path' do
+    it 'reponds with a 404 code when bad id is given' do
+      merchant = create(:merchant)
+      item = create(:item, merchant_id: merchant.id)
+
+      get "/api/v1/items/505050"
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
+    end
+
+    it 'reponds with a 404 code when string id is given' do
+      merchant = create(:merchant)
+      item = create(:item, merchant_id: merchant.id)
+
+      get "/api/v1/items/'494949'"
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
+    end
+
+    it 'reponds with a 404 code when updating with bad merchant id' do
+      merchant = create(:merchant)
+      id = create(:item, merchant_id: merchant.id).id
+
+      item_params = { name: "Gibson", merchant_id: 50505050 }
+      headers = {"CONTENT_TYPE" => "application/json"}
+
+      patch "/api/v1/items/#{id}", headers: headers, params: JSON.generate({item: item_params})
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
+    end
+  end
 end

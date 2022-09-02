@@ -39,7 +39,7 @@ describe 'Item find all API' do
     end
   end
 
-  describe '#sad_path'do
+  describe '#sad_path' do
     it 'returns error message when no items are found' do
       merchant_1 = Merchant.create!(name: 'Little Shop of Horrors')
       item_1 = Item.create!(name: 'Plant food', description: 'Food for plants', unit_price: 10.00, merchant_id: merchant_1.id)
@@ -52,6 +52,21 @@ describe 'Item find all API' do
       expect(response).to be_successful
 
       expect(items[:data].count).to eq(0)
+    end
+
+    it 'returns error message when search param is given' do
+      merchant_1 = Merchant.create!(name: 'Little Shop of Horrors')
+      item_1 = Item.create!(name: 'Plant food', description: 'Food for plants', unit_price: 10.00, merchant_id: merchant_1.id)
+      item_2 = Item.create!(name: 'Plant Pot', description: 'Pot for plants', unit_price: 20.00, merchant_id: merchant_1.id)
+      item_3 = Item.create!(name: 'Venus Fly Trap', description: 'Venus Fly Trap plant', unit_price: 30.00, merchant_id: merchant_1.id)
+
+      get '/api/v1/items/find_all?name='
+
+      items = JSON.parse(response.body, symbolize_names: true)
+   
+      expect(response).to_not be_successful
+
+      expect(response.status).to eq(400)
     end
   end
 
