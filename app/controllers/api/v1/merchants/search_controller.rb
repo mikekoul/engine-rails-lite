@@ -1,4 +1,4 @@
-class Api::V1::SearchesController < ApplicationController
+class Api::V1::Merchants::SearchController < ApplicationController
   before_action :param_validation
 
   def find_merchant
@@ -7,15 +7,6 @@ class Api::V1::SearchesController < ApplicationController
       render json: { data: { message: 'Merchant not found' } }
     else
       render json: MerchantSerializer.new(merchant)
-    end
-  end
-
-  def find_items
-    items = Item.search_items(params[:name])
-    if items.nil?
-      render json: { data: [] }
-    else
-      render json: ItemSerializer.new(items)
     end
   end
 
