@@ -37,6 +37,18 @@ describe 'Merchant find API' do
 
       expect(merchant[:data][:message]).to eq('Merchant not found')
     end
+
+    it 'returns error message when no name param is given found' do
+      merchant_1 = Merchant.create!(name: 'Little Shop of Horrors')
+
+      get '/api/v1/merchants/find?name='
+
+      merchant = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+
+      expect(response.status).to eq(400)
+    end
   end
 
   describe '#param_validation' do

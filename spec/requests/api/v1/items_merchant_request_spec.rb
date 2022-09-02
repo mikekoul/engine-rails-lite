@@ -23,4 +23,26 @@ it '#show' do
     expect(merchant[:data][:attributes]).to have_key(:name)
     expect(merchant[:data][:attributes][:name]).to be_a(String)
   end
+
+  describe '#sad_path' do
+    it 'reponds with a 404 code when bad id is given' do
+      merchant = create(:merchant)
+      item = create(:item, merchant_id: merchant.id)
+
+      get "/api/v1/items/505050/merchant"
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
+    end
+
+    it 'reponds with a 404 code when string id is given' do
+      merchant = create(:merchant)
+      item = create(:item, merchant_id: merchant.id)
+
+      get "/api/v1/items/'494949'/merchant"
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
+    end
+  end
 end

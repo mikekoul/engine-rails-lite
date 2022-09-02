@@ -38,4 +38,15 @@ describe 'Merchant Items API' do
       expect(item[:attributes][:merchant_id]).to be_a(Integer)
     end
   end
+
+  describe '#sad_path' do
+    it 'reponds with a 404 code when bad id is given' do
+      create(:merchant).id
+
+      get "/api/v1/merchants/505050/items"
+
+      expect(response).to_not be_successful
+      expect(response.status).to eq(404)
+    end
+  end
 end
